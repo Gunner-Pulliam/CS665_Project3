@@ -39,10 +39,63 @@ In command terminal: python app.py
 
 open the application in a browser using the provided link
 
-## Normalization Report
+# Normalization Report
 
+## Original Functional Dependencies
 
+### Students
+- student_id → first_name, last_name, email, enrollment_date, created_at
+- email → student_id, first_name, last_name, enrollment_date
 
-## AI Log
+### Instructors
+- instructor_id → instructor_name, department, hire_date, created_at
+
+### Courses
+- course_id → course_name, credits, instructor_id, created_at
+- instructor_id → instructor_name, department, hire_date
+
+### Enrollments
+- enrollment_id → student_id, course_id, grade, enrollment_date, created_at
+- student_id, course_id → enrollment_id, grade, enrollment_date
+
+## Anomaly Identification
+
+The original design was mostly normalized because students, instructors, courses, and enrollments were stored in separate tables. However, there were still potential issues.
+
+### Update Anomaly
+If a derived value such as grade_status is stored in the Enrollments table, then changing a grade would also require updating grade_status. If this is not updated correctly, the data could become inconsistent.
+
+### Insertion Anomaly
+If course and instructor information were stored together in one large table, a new instructor could not be added unless they were already assigned to a course.
+
+### Deletion Anomaly
+If a student enrollment were deleted from a combined table, important course or instructor information could accidentally be lost if that was the only row containing the data.
+
+## Decomposition Steps
+
+The database was decomposed into four tables:
+
+1. Students stores only student-specific information.
+2. Instructors stores only instructor-specific information.
+3. Courses stores course-specific information and references the instructor teaching the course.
+4. Enrollments resolves the many-to-many relationship between Students and Courses.
+
+The derived grade_status field was removed because it can be calculated from the grade value instead of being stored.
+
+## Final Relational Schema
+
+Students(student_id, first_name, last_name, email, enrollment_date, created_at)
+
+Instructors(instructor_id, instructor_name, department, hire_date, created_at)
+
+Courses(course_id, course_name, credits, instructor_id, created_at)
+
+Enrollments(enrollment_id, student_id, course_id, grade, enrollment_date, created_at)
+
+## 3NF Explanation
+
+Each table is in 3rd Normal Form because every non-key attribute depends only on the primary key, the whole key, and nothing but the key. There are no repeating groups, no partial dependencies, and no transitive dependencies. The many-to-many relationship between students and courses is properly handled by the Enrollments table.
+
+# AI Log
 
 
