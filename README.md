@@ -98,4 +98,21 @@ Each table is in 3rd Normal Form because every non-key attribute depends only on
 
 # AI Log
 
+## AI Use 1: Project 2 Database Normalization
+
+**The Tool:** ChatGPT-5.5
+
+**The Prompt:** Can you look over and explain what needs to be normalized in my provided databases and how I could changed them to ensure they meet 3NF tables requirements?
+
+**AI Output:** The original Student Course Manager database was already mostly normalized because students, instructors, courses, and enrollments were separated into their own tables. This design avoids storing student, instructor, and course information repeatedly in one large table. The main normalization issue was the grade_status column added to the Enrollments table. Since grade_status is derived from the grade column, it creates a transitive dependency where enrollment_id → grade → grade_status, which violates 3rd Normal Form. To correct this, grade_status should be removed from the Enrollments table and instead calculated when needed using a SQL CASE statement or in the application template. Additional constraints should also be added to strengthen data integrity, including NOT NULL constraints, a UNIQUE constraint on student email, a CHECK constraint for course credits, a CHECK constraint for valid grade values, and a UNIQUE(student_id, course_id) constraint to prevent duplicate enrollments. After these changes, each table should store information about only one entity, and every non-key attribute should depend only on the primary key of its table.
+
+**Your Modification:** I modified and added the suggested NOT NULL, UNIQUE, & CHECK constraints to each of my tables as well as removing grade_status so it can instead be calculated. 
+
+## AI Use 2: Installing Flask 
+
+**The Prompt:** How do I install Flask to be used with python for this project
+
+**AI Output:** ChatGPT explained how to install Flask for the project by creating and activating a Python virtual environment, installing Flask and Flask-SQLAlchemy with pip, saving the installed dependencies to a requirements.txt file, verifying the Flask installation, and running the Flask application through app.py.
+
+**Your Modification:** I followed the installation steps in my project folder and checked to make sure Flask was installed correctly. I then created a requirements.txt file for all the project dependencies and used the instructions to prepare my project for running as a Flask web application.
 
