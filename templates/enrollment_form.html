@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Add Enrollment</h1>
+
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Student</label>
+        <select name="student_id" class="form-select" required>
+            <option value="">Select a student</option>
+
+            {% for student in students %}
+                <option value="{{ student.student_id }}">
+                    {{ student.first_name }} {{ student.last_name }} - {{ student.email }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Course</label>
+        <select name="course_id" class="form-select" required>
+            <option value="">Select a course</option>
+
+            {% for course in courses %}
+                <option value="{{ course.course_id }}">
+                    {{ course.course_name }} - {{ course.credits }} credits
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Grade</label>
+        <input 
+            type="number"
+            name="grade"
+            class="form-control"
+            min="0"
+            max="100"
+            step="0.01"
+            placeholder="Optional, 0-100"
+        >
+        <div class="form-text">
+            Leave this blank if the student has not received a grade yet.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Enrollment Date</label>
+        <input 
+            type="date"
+            name="enrollment_date"
+            class="form-control"
+            required
+        >
+    </div>
+
+    <button class="btn btn-success">Save</button>
+    <a href="{{ url_for('enrollments') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
