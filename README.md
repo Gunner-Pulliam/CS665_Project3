@@ -7,11 +7,13 @@ In this project, you will develop a functional full-stack application using Pyth
 Student Course Manager is a full-stack Python web application that allows users to manage students, courses, and enrollments. The application is intended for a school or college that needs a simple way to track students, course enrollment, and grades.
 
 ## Instructions
-**1. Clone the repository**
+**1. Clone the repository OR Download**
 
 Use: git clone YOUR_REPOSITORY_URL
 
-Then open a command terminal and change to the directory: cd student-course-manager
+**OR** download reposotory as a Zip and extract it
+
+Then open a command terminal and change to the directory: cd CS665_Project3
 
 **2. Create a virtual environment**
 
